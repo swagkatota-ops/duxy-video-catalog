@@ -1,0 +1,5 @@
+Visual validation completed on 2026-09-09.
+- Desktop (1440×900): Header, hero image, Japanese typography, CTA, 148-video statistic, and content-index transition render correctly with sufficient contrast and no clipping.
+- Mobile (390×844): Header is compact, headline and hero CTA remain legible, background focal point is retained, and the first content-index heading is visible without horizontal overflow.
+- TypeScript and production build completed successfully before visual validation.
+- Interaction test: entering 「アルファード」 returned 9 matching videos. Clearing the search and selecting 「ランキング・おすすめ」 returned 3 videos, all labeled with the selected category.
