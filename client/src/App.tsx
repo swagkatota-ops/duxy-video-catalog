@@ -1,12 +1,14 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Route, Switch } from "wouter";
+import { Route, Router as WouterRouter, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
-function Router() {
+const appBase = import.meta.env.VITE_GITHUB_PAGES === "true" ? "/duxy-video-catalog" : "";
+
+function AppRouter() {
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -22,7 +24,9 @@ export default function App() {
       <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <WouterRouter base={appBase}>
+            <AppRouter />
+          </WouterRouter>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
