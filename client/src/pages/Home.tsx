@@ -4,12 +4,16 @@ import {
   CarFront,
   ChevronDown,
   CirclePlay,
+  Clock3,
+  ExternalLink,
   MapPin,
+  Phone,
   Search,
   SlidersHorizontal,
   X,
   Youtube,
 } from "lucide-react";
+import { StoreMap } from "@/components/StoreMap";
 import { categories, videos, type VideoCategory } from "@/data/videos";
 
 const categoryDescriptions: Record<VideoCategory, string> = {
@@ -38,18 +42,30 @@ const vehicleFilterTags = ["SUV", "ミニバン", "高級車", "コンパクト�
 type VehicleFilterTag = (typeof vehicleFilterTags)[number];
 type TaggedVideo = (typeof videos)[number] & { vehicleTags: VehicleFilterTag[] };
 
-const shopList = [
-  { name: "Duxy本店", area: "愛知県清須市", url: "https://www.jcar.co.jp/shop/duxy-kitanagoya" },
-  { name: "Duxy名古屋東店", area: "愛知県春日井市", url: "https://www.jcar.co.jp/shop/duxy-nagoyahigashi" },
-  { name: "Duxy名古屋西店", area: "愛知県津島市", url: "https://www.jcar.co.jp/shop/duxy-nagoyanishi" },
-  { name: "Duxy豊田店", area: "愛知県みよし市", url: "https://www.jcar.co.jp/shop/duxy-miyoshi" },
-  { name: "Duxy安城店", area: "愛知県安城市", url: "https://www.jcar.co.jp/shop/duxy-anjo" },
-  { name: "Duxy大垣店", area: "岐阜県大垣市", url: "https://www.jcar.co.jp/shop/duxy-ohgaki" },
-  { name: "Duxy可児店", area: "岐阜県可児市", url: "https://www.jcar.co.jp/shop/duxy-kani" },
-  { name: "Duxy北名古屋店", area: "愛知県清須市", url: "https://www.jcar.co.jp/shop/j-auto-international-kitanagoya" },
-  { name: "Duxy清須店", area: "愛知県清須市", url: "https://www.jcar.co.jp/shop/duxy-kiyosu" },
-  { name: "Duxy天白店", area: "愛知県名古屋市", url: "https://www.jcar.co.jp/shop/duxy-tenpaku" },
-  { name: "Duxy岡崎店", area: "愛知県岡崎市", url: "https://www.jcar.co.jp/shop/duxy-okazaki" },
+type Shop = {
+  name: string;
+  area: string;
+  address: string;
+  phone: string;
+  tel: string;
+  hours: string;
+  closed: string;
+  url: string;
+  mapUrl: string;
+};
+
+const shopList: Shop[] = [
+  { name: "Duxy本店", area: "愛知県清須市", address: "〒452-0962 愛知県清須市春日砂賀東137番地", phone: "052-433-4911", tel: "0524334911", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-kitanagoya", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県清須市春日砂賀東137" },
+  { name: "Duxy名古屋東店", area: "愛知県春日井市", address: "〒486-0851 愛知県春日井市篠木町5-2475-6", phone: "0568-86-3477", tel: "0568863477", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-nagoyahigashi", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県春日井市篠木町5-2475-6" },
+  { name: "Duxy名古屋西店", area: "愛知県津島市", address: "〒496-0005 愛知県津島市神守町一丁田53", phone: "0567-22-4711", tel: "0567224711", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-nagoyanishi", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県津島市神守町一丁田53" },
+  { name: "Duxy豊田店", area: "愛知県みよし市", address: "〒470-0224 愛知県みよし市三好町森曽16-1", phone: "0561-33-2033", tel: "0561332033", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-miyoshi", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県みよし市三好町森曽16-1" },
+  { name: "Duxy安城店", area: "愛知県安城市", address: "〒446-0053 愛知県安城市高棚町小牧30", phone: "0566-92-5615", tel: "0566925615", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-anjo", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県安城市高棚町小牧30" },
+  { name: "Duxy大垣店", area: "岐阜県大垣市", address: "〒503-0804 岐阜県大垣市中ノ江1丁目28番1", phone: "0584-74-1881", tel: "0584741881", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-ohgaki", mapUrl: "https://www.google.com/maps/search/?api=1&query=岐阜県大垣市中ノ江1丁目28-1" },
+  { name: "Duxy可児店", area: "岐阜県可児市", address: "〒509-0203 岐阜県可児市下恵土字広瀬5864-1", phone: "0574-61-3333", tel: "0574613333", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-kani", mapUrl: "https://www.google.com/maps/search/?api=1&query=岐阜県可児市下恵土5864-1" },
+  { name: "Duxy北名古屋店", area: "愛知県清須市", address: "〒452-0962 愛知県清須市春日新町39-1", phone: "052-408-5855", tel: "0524085855", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/j-auto-international-kitanagoya", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県清須市春日新町39-1" },
+  { name: "Duxy清須店", area: "愛知県清須市", address: "〒452-0941 愛知県清須市西市場5丁目5-3", phone: "052-400-0855", tel: "0524000855", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-kiyosu", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県清須市西市場5丁目5-3" },
+  { name: "Duxy天白店", area: "愛知県名古屋市", address: "〒468-0013 愛知県名古屋市天白区荒池2-1304", phone: "052-807-5678", tel: "0528075678", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-tenpaku", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県名古屋市天白区荒池2-1304" },
+  { name: "Duxy岡崎店", area: "愛知県岡崎市", address: "〒444-0858 愛知県岡崎市上六名4丁目1-1", phone: "0564-73-0771", tel: "0564730771", hours: "10:00–18:00", closed: "月曜・第2/第3火曜", url: "https://www.jcar.co.jp/shop/duxy-okazaki", mapUrl: "https://www.google.com/maps/search/?api=1&query=愛知県岡崎市上六名4丁目1-1" },
 ];
 
 const INVENTORY_URL = "https://www.jcar.co.jp/all?odr=1";
@@ -74,25 +90,10 @@ function VideoCard({ video, index }: { video: TaggedVideo; index: number }) {
   return (
     <article className="video-card" style={{ "--card-index": Math.min(index, 11) } as React.CSSProperties}>
       <a className="video-main" href={video.url} target="_blank" rel="noreferrer" aria-label={`${video.title} をYouTubeで再生`}>
-        <div className="thumbnail-wrap">
-          <img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" className="thumbnail" />
-          <div className="thumbnail-scrim" />
-          <span className="play-button" aria-hidden="true"><CirclePlay size={25} strokeWidth={1.7} /></span>
-          <span className="video-number">#{String(video.no).padStart(3, "0")}</span>
-        </div>
-        <div className="video-card-body">
-          <span className={`category-label category-${categoryAccent[video.category]}`}>{video.category}</span>
-          <h3>{video.title}</h3>
-          <div className="vehicle-tag-list" aria-label="動画のテーマタグ">
-            {video.vehicleTags.map((tag) => <span key={tag} className="vehicle-tag">{tag}</span>)}
-          </div>
-          <span className="watch-link">YouTubeで見る <ArrowUpRight size={14} strokeWidth={2} /></span>
-        </div>
+        <div className="thumbnail-wrap"><img src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} alt="" loading="lazy" className="thumbnail" /><div className="thumbnail-scrim" /><span className="play-button" aria-hidden="true"><CirclePlay size={25} strokeWidth={1.7} /></span><span className="video-number">#{String(video.no).padStart(3, "0")}</span></div>
+        <div className="video-card-body"><span className={`category-label category-${categoryAccent[video.category]}`}>{video.category}</span><h3>{video.title}</h3><div className="vehicle-tag-list" aria-label="動画のテーマタグ">{video.vehicleTags.map((tag) => <span key={tag} className="vehicle-tag">{tag}</span>)}</div><span className="watch-link">YouTubeで見る <ArrowUpRight size={14} strokeWidth={2} /></span></div>
       </a>
-      <div className="video-actions">
-        <a href={INVENTORY_URL} target="_blank" rel="noreferrer"><CarFront size={14} /> 在庫を見る</a>
-        <a href="#shops"><MapPin size={14} /> 店舗に相談</a>
-      </div>
+      <div className="video-actions"><a href={INVENTORY_URL} target="_blank" rel="noreferrer"><CarFront size={14} /> 在庫を見る</a><a href="#shops"><MapPin size={14} /> 店舗に相談</a></div>
     </article>
   );
 }
@@ -102,10 +103,12 @@ export default function Home() {
   const [activeVehicleTag, setActiveVehicleTag] = useState<VehicleFilterTag | "すべて">("すべて");
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [selectedShopIndex, setSelectedShopIndex] = useState(0);
 
   const videosWithTags = useMemo<TaggedVideo[]>(() => videos.map((video) => ({ ...video, vehicleTags: getVehicleTags(video) })), []);
   const categoryCounts = useMemo(() => Object.fromEntries(categories.map((category) => [category, videos.filter((video) => video.category === category).length])) as Record<VideoCategory, number>, []);
   const tagCounts = useMemo(() => Object.fromEntries(vehicleFilterTags.map((tag) => [tag, videosWithTags.filter((video) => video.vehicleTags.includes(tag)).length])) as Record<VehicleFilterTag, number>, [videosWithTags]);
+  const selectedShop = shopList[selectedShopIndex];
 
   const filteredVideos = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase("ja");
@@ -125,46 +128,17 @@ export default function Home() {
 
   return (
     <div className="site-shell">
-      <header className="topbar">
-        <a className="brand" href="#top" aria-label="Duxy Video Catalog トップへ"><span className="brand-mark"><span /></span><span>DUXY</span><small>by SANWA SERVICE GROUP</small></a>
-        <nav className="main-nav" aria-label="ページ内ナビゲーション"><a href="#top">HOME</a><a href="#overview">CATEGORY</a><a href="#catalog">VIDEO CATALOG</a><a href="#shops">SHOPS</a></nav>
-        <a className="youtube-link" href="https://www.youtube.com/@duxy_aichi" target="_blank" rel="noreferrer"><Youtube size={17} fill="currentColor" /> <span>CHANNEL</span><ArrowUpRight size={13} /></a>
-      </header>
-
+      <header className="topbar"><a className="brand" href="#top" aria-label="Duxy Video Catalog トップへ"><span className="brand-mark"><span /></span><span>DUXY</span><small>by SANWA SERVICE GROUP</small></a><nav className="main-nav" aria-label="ページ内ナビゲーション"><a href="#top">HOME</a><a href="#overview">CATEGORY</a><a href="#catalog">VIDEO CATALOG</a><a href="#shops">SHOPS</a></nav><a className="youtube-link" href="https://www.youtube.com/@duxy_aichi" target="_blank" rel="noreferrer"><Youtube size={17} fill="currentColor" /> <span>CHANNEL</span><ArrowUpRight size={13} /></a></header>
       <main id="top">
-        <section className="hero">
-          <img className="hero-art" src="/manus-storage/sanwa-style-catalog-hero_0d274adc.jpg" alt="" />
-          <div className="hero-noise" />
-          <div className="hero-content"><p className="eyebrow"><span className="eyebrow-line" /> DUXY CHANNEL ARCHIVE</p><h1>クルマ選びを、<br /><em>もっと確かに。</em></h1><p className="hero-copy">Duxyチャンネルの148本を、検討テーマごとに再編集。<br className="desktop-break" />知りたい動画へ、最短でたどり着けるカタログです。</p><a className="hero-cta" href="#catalog">動画を探す <ChevronDown size={18} /></a></div>
-          <div className="hero-meta"><span>CURATED</span><strong>148</strong><span>VIDEOS / 8 CATEGORIES</span></div><div className="hero-bottom-line" />
-        </section>
-
-        <section className="category-overview" id="overview" aria-labelledby="overview-title">
-          <div className="section-intro"><p className="eyebrow"><span className="eyebrow-line" /> CONTENT INDEX</p><h2 id="overview-title">目的から、<br />動画を選ぶ。</h2><p>タイトルの主訴求をもとに、各動画を1つのカテゴリへ整理しています。</p></div>
-          <div className="category-grid">{categories.map((category, index) => (<button key={category} className="category-summary" onClick={() => { resetVisible(category); setTagFilter("すべて"); document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" }); }}><span className={`summary-dot category-${categoryAccent[category]}`} /><span className="summary-order">0{index + 1}</span><strong>{category}</strong><span className="summary-count">{categoryCounts[category]} <small>VIDEOS</small></span><span className="summary-arrow"><ArrowUpRight size={16} /></span></button>))}</div>
-        </section>
-
-        <section className="catalog-section" id="catalog" aria-labelledby="catalog-title">
-          <div className="catalog-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> BROWSE THE ARCHIVE</p><h2 id="catalog-title">VIDEO<br /><em>CATALOG</em></h2></div><p>車種・比較・ローン・サービスから<br />気になるテーマを横断検索できます。</p></div>
-          <div className="controls-panel">
-            <div className="search-box"><Search size={19} strokeWidth={1.8} /><input value={query} onChange={(event) => { setQuery(event.target.value); setVisibleCount(INITIAL_VISIBLE); }} placeholder="例：アルファード、ローン、防犯" aria-label="動画を検索" />{query && <button className="clear-search" onClick={() => setQuery("")} aria-label="検索をクリア"><X size={17} /></button>}</div>
-            <div className="filter-group"><div className="filter-row" aria-label="カテゴリで絞り込む"><span className="filter-label"><SlidersHorizontal size={15} /> CATEGORY</span><button className={`filter-chip ${showAll ? "is-active" : ""}`} onClick={() => resetVisible("すべて")}>すべて <b>{videos.length}</b></button>{categories.map((category) => (<button key={category} className={`filter-chip ${activeCategory === category ? "is-active" : ""}`} onClick={() => resetVisible(category)}>{category}<b>{categoryCounts[category]}</b></button>))}</div>
-            <div className="filter-row vehicle-filter-row" aria-label="車種タグで絞り込む"><span className="filter-label"><CarFront size={15} /> VEHICLE</span><button className={`filter-chip vehicle-filter-chip ${activeVehicleTag === "すべて" ? "is-active" : ""}`} onClick={() => setTagFilter("すべて")}>すべて</button>{vehicleFilterTags.map((tag) => (<button key={tag} className={`filter-chip vehicle-filter-chip ${activeVehicleTag === tag ? "is-active" : ""}`} onClick={() => setTagFilter(tag)}>{tag}<b>{tagCounts[tag]}</b></button>))}</div></div>
-          </div>
-
-          <div className="result-meta"><p><span>{filteredVideos.length}</span> VIDEOS FOUND{activeCategory !== "すべて" && <><i> / </i>{activeCategory}</>}{activeVehicleTag !== "すべて" && <><i> / </i>{activeVehicleTag}</>}</p>{!showAll && <button className="reset-button" onClick={resetAll}>すべて表示に戻す <X size={14} /></button>}</div>
-          {visibleVideos.length > 0 ? <div className="video-grid">{visibleVideos.map((video, index) => <VideoCard key={video.id} video={video} index={index} />)}</div> : <div className="empty-state"><Search size={28} strokeWidth={1.5} /><h3>該当する動画がありません</h3><p>車種名やテーマを変えて、もう一度探してみてください。</p><button onClick={resetAll}>検索条件をクリア</button></div>}
-          {visibleCount < filteredVideos.length && <div className="load-more-wrap"><button className="load-more" onClick={() => setVisibleCount((count) => count + INITIAL_VISIBLE)}>さらに見る <span>{filteredVideos.length - visibleCount}本</span><ChevronDown size={17} /></button></div>}
-        </section>
-
-        <section className="shop-section" id="shops" aria-labelledby="shops-title">
-          <div className="shop-intro"><div><p className="eyebrow"><span className="eyebrow-line" /> FIND YOUR DUXY</p><h2 id="shops-title">お近くの店舗で、<br />クルマを相談する。</h2></div><p>気になる1台やローン・リースのことは、<br />お近くのDuxy店舗へご相談ください。</p></div>
-          <div className="shop-cta-panel"><div><span className="cta-kicker">ONLINE INVENTORY & CONTACT</span><h3>動画で気になったクルマを、<br />在庫・店舗へつなぐ。</h3></div><div className="cta-actions"><a className="inventory-cta" href={INVENTORY_URL} target="_blank" rel="noreferrer"><CarFront size={18} /> 全店舗の在庫を見る <ArrowUpRight size={15} /></a><a className="contact-cta" href={CONTACT_URL} target="_blank" rel="noreferrer">お問い合わせ <ArrowUpRight size={15} /></a></div></div>
-          <div className="shop-grid">{shopList.map((shop, index) => <a key={shop.name} className="shop-link-card" href={shop.url} target="_blank" rel="noreferrer"><span className="shop-number">{String(index + 1).padStart(2, "0")}</span><div><h3>{shop.name}</h3><p><MapPin size={13} /> {shop.area}</p></div><ArrowUpRight className="shop-arrow" size={17} /></a>)}</div>
+        <section className="hero"><img className="hero-art" src="/manus-storage/sanwa-style-catalog-hero_0d274adc.jpg" alt="" /><div className="hero-noise" /><div className="hero-content"><p className="eyebrow"><span className="eyebrow-line" /> DUXY CHANNEL ARCHIVE</p><h1>クルマ選びを、<br /><em>もっと確かに。</em></h1><p className="hero-copy">Duxyチャンネルの148本を、検討テーマごとに再編集。<br className="desktop-break" />知りたい動画へ、最短でたどり着けるカタログです。</p><a className="hero-cta" href="#catalog">動画を探す <ChevronDown size={18} /></a></div><div className="hero-meta"><span>CURATED</span><strong>148</strong><span>VIDEOS / 8 CATEGORIES</span></div><div className="hero-bottom-line" /></section>
+        <section className="category-overview" id="overview" aria-labelledby="overview-title"><div className="section-intro"><p className="eyebrow"><span className="eyebrow-line" /> CONTENT INDEX</p><h2 id="overview-title">目的から、<br />動画を選ぶ。</h2><p>タイトルの主訴求をもとに、各動画を1つのカテゴリへ整理しています。</p></div><div className="category-grid">{categories.map((category, index) => (<button key={category} className="category-summary" onClick={() => { resetVisible(category); setTagFilter("すべて"); document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" }); }}><span className={`summary-dot category-${categoryAccent[category]}`} /><span className="summary-order">0{index + 1}</span><strong>{category}</strong><span className="summary-count">{categoryCounts[category]} <small>VIDEOS</small></span><span className="summary-arrow"><ArrowUpRight size={16} /></span></button>))}</div></section>
+        <section className="catalog-section" id="catalog" aria-labelledby="catalog-title"><div className="catalog-heading"><div><p className="eyebrow"><span className="eyebrow-line" /> BROWSE THE ARCHIVE</p><h2 id="catalog-title">VIDEO<br /><em>CATALOG</em></h2></div><p>車種・比較・ローン・サービスから<br />気になるテーマを横断検索できます。</p></div><div className="controls-panel"><div className="search-box"><Search size={19} strokeWidth={1.8} /><input value={query} onChange={(event) => { setQuery(event.target.value); setVisibleCount(INITIAL_VISIBLE); }} placeholder="例：アルファード、ローン、防犯" aria-label="動画を検索" />{query && <button className="clear-search" onClick={() => setQuery("")} aria-label="検索をクリア"><X size={17} /></button>}</div><div className="filter-group"><div className="filter-row" aria-label="カテゴリで絞り込む"><span className="filter-label"><SlidersHorizontal size={15} /> CATEGORY</span><button className={`filter-chip ${showAll ? "is-active" : ""}`} onClick={() => resetVisible("すべて")}>すべて <b>{videos.length}</b></button>{categories.map((category) => (<button key={category} className={`filter-chip ${activeCategory === category ? "is-active" : ""}`} onClick={() => resetVisible(category)}>{category}<b>{categoryCounts[category]}</b></button>))}</div><div className="filter-row vehicle-filter-row" aria-label="車種タグで絞り込む"><span className="filter-label"><CarFront size={15} /> VEHICLE</span><button className={`filter-chip vehicle-filter-chip ${activeVehicleTag === "すべて" ? "is-active" : ""}`} onClick={() => setTagFilter("すべて")}>すべて</button>{vehicleFilterTags.map((tag) => (<button key={tag} className={`filter-chip vehicle-filter-chip ${activeVehicleTag === tag ? "is-active" : ""}`} onClick={() => setTagFilter(tag)}>{tag}<b>{tagCounts[tag]}</b></button>))}</div></div></div><div className="result-meta"><p><span>{filteredVideos.length}</span> VIDEOS FOUND{activeCategory !== "すべて" && <><i> / </i>{activeCategory}</>}{activeVehicleTag !== "すべて" && <><i> / </i>{activeVehicleTag}</>}</p>{!showAll && <button className="reset-button" onClick={resetAll}>すべて表示に戻す <X size={14} /></button>}</div>{visibleVideos.length > 0 ? <div className="video-grid">{visibleVideos.map((video, index) => <VideoCard key={video.id} video={video} index={index} />)}</div> : <div className="empty-state"><Search size={28} strokeWidth={1.5} /><h3>該当する動画がありません</h3><p>車種名やテーマを変えて、もう一度探してみてください。</p><button onClick={resetAll}>検索条件をクリア</button></div>}{visibleCount < filteredVideos.length && <div className="load-more-wrap"><button className="load-more" onClick={() => setVisibleCount((count) => count + INITIAL_VISIBLE)}>さらに見る <span>{filteredVideos.length - visibleCount}本</span><ChevronDown size={17} /></button></div>}</section>
+        <section className="shop-section" id="shops" aria-labelledby="shops-title"><div className="shop-intro"><div><p className="eyebrow"><span className="eyebrow-line" /> FIND YOUR DUXY</p><h2 id="shops-title">お近くの店舗で、<br />クルマを相談する。</h2></div><p>気になる1台やローン・リースのことは、<br />お近くのDuxy店舗へご相談ください。</p></div><div className="shop-cta-panel"><div><span className="cta-kicker">ONLINE INVENTORY & CONTACT</span><h3>動画で気になったクルマを、<br />在庫・店舗へつなぐ。</h3></div><div className="cta-actions"><a className="inventory-cta" href={INVENTORY_URL} target="_blank" rel="noreferrer"><CarFront size={18} /> 全店舗の在庫を見る <ArrowUpRight size={15} /></a><a className="contact-cta" href={CONTACT_URL} target="_blank" rel="noreferrer">お問い合わせ <ArrowUpRight size={15} /></a></div></div>
+          <div className="shop-explorer"><div className="shop-list" role="tablist" aria-label="Duxy店舗を選択">{shopList.map((shop, index) => <button key={shop.name} className={`shop-list-item ${selectedShopIndex === index ? "is-active" : ""}`} role="tab" aria-selected={selectedShopIndex === index} onClick={() => setSelectedShopIndex(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{shop.name}</strong><small>{shop.area}</small><ArrowUpRight size={15} /></button>)}</div>
+            <article className="shop-detail-panel" aria-live="polite"><div className="shop-detail-top"><div><p className="eyebrow"><span className="eyebrow-line" /> STORE INFORMATION</p><h3>{selectedShop.name}</h3><p className="shop-detail-area">{selectedShop.area}</p></div><a className="shop-official-link" href={selectedShop.url} target="_blank" rel="noreferrer">公式店舗ページ <ExternalLink size={14} /></a></div><div className="shop-detail-content"><div className="shop-information"><dl><div><dt><MapPin size={17} /> ADDRESS</dt><dd>{selectedShop.address}</dd></div><div><dt><Phone size={17} /> TEL</dt><dd><a href={`tel:${selectedShop.tel}`}>{selectedShop.phone}</a></dd></div><div><dt><Clock3 size={17} /> HOURS</dt><dd>{selectedShop.hours}<small>定休日：{selectedShop.closed}</small></dd></div></dl><div className="shop-detail-actions"><a className="directions-button" href={selectedShop.mapUrl} target="_blank" rel="noreferrer"><MapPin size={16} /> Googleマップで経路を見る <ArrowUpRight size={14} /></a><a className="call-button" href={`tel:${selectedShop.tel}`}><Phone size={15} /> 今すぐ電話する</a></div></div><StoreMap shop={selectedShop} /></div></article></div>
           <div className="shop-directory"><a href="https://sanwaservice-group.jp/shop/" target="_blank" rel="noreferrer">三和サービスグループの店舗一覧を見る <ArrowUpRight size={15} /></a></div>
         </section>
       </main>
-
       <footer><div className="footer-brand"><span className="brand-mark"><span /></span> DUXY <small>VIDEO CATALOG</small></div><p>分類基準：動画タイトルから読み取れる主目的。<br />各動画はYouTubeのDuxyチャンネルへ遷移します。</p><p className="footer-count">148 VIDEOS<br />8 CATEGORIES</p></footer>
     </div>
   );
