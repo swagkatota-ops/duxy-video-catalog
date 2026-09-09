@@ -96,8 +96,13 @@ export default function Home() {
         <a className="brand" href="#top" aria-label="Duxy Video Catalog トップへ">
           <span className="brand-mark"><span /></span>
           <span>DUXY</span>
-          <small>VIDEO CATALOG</small>
+          <small>by SANWA SERVICE GROUP</small>
         </a>
+        <nav className="main-nav" aria-label="ページ内ナビゲーション">
+          <a href="#top">HOME</a>
+          <a href="#overview">CATEGORY</a>
+          <a href="#catalog">VIDEO CATALOG</a>
+        </nav>
         <a className="youtube-link" href="https://www.youtube.com/@duxy_aichi" target="_blank" rel="noreferrer">
           <Youtube size={17} fill="currentColor" /> <span>CHANNEL</span><ArrowUpRight size={13} />
         </a>
@@ -105,7 +110,7 @@ export default function Home() {
 
       <main id="top">
         <section className="hero">
-          <img className="hero-art" src="/manus-storage/duxy-catalog-hero_32e8cae6.jpg" alt="" />
+          <img className="hero-art" src="/manus-storage/sanwa-style-catalog-hero_0d274adc.jpg" alt="" />
           <div className="hero-noise" />
           <div className="hero-content">
             <p className="eyebrow"><span className="eyebrow-line" /> DUXY CHANNEL ARCHIVE</p>
@@ -121,7 +126,7 @@ export default function Home() {
           <div className="hero-bottom-line" />
         </section>
 
-        <section className="category-overview" aria-labelledby="overview-title">
+        <section className="category-overview" id="overview" aria-labelledby="overview-title">
           <div className="section-intro">
             <p className="eyebrow"><span className="eyebrow-line" /> CONTENT INDEX</p>
             <h2 id="overview-title">目的から、<br />動画を選ぶ。</h2>

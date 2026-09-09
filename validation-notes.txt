@@ -3,3 +3,4 @@ Visual validation completed on 2026-09-09.
 - Mobile (390×844): Header is compact, headline and hero CTA remain legible, background focal point is retained, and the first content-index heading is visible without horizontal overflow.
 - TypeScript and production build completed successfully before visual validation.
 - Interaction test: entering 「アルファード」 returned 9 matching videos. Clearing the search and selecting 「ランキング・おすすめ」 returned 3 videos, all labeled with the selected category.
+- Redesigned desktop validation: The site now has an almost-white header with fine, widely-spaced navigation; a blue-and-white automotive hero; large Japanese Mincho-style display type; restrained cyan accents; and a white/light-gray editorial content base. This matches the reference site's core visual language while retaining the original catalog functionality.
