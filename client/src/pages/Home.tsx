@@ -64,7 +64,7 @@ function assetUrl(githubPath: string, manusPath: string) {
 const catalogAssets = {
   hero: assetUrl("sanwa-style-catalog-hero.jpg", "/manus-storage/sanwa-style-catalog-hero_0d274adc.jpg"),
   sanwaLogo: assetUrl("sanwa-service-logo-highcontrast.png", "/manus-storage/sanwa-service-logo-highcontrast_8759e80b.png"),
-  duxyLogo: assetUrl("duxy-logo.png", "/manus-storage/duxy-logo_0f2617a6.png"),
+  duxyLogo: assetUrl("duxy-logo-black.png", "/manus-storage/duxy-logo-black_5cb06023.png"),
 };
 
 const shopList: Shop[] = [
