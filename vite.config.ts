@@ -209,7 +209,7 @@ const plugins = isGitHubPagesBuild
   : [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
-  base: isGitHubPagesBuild ? "/duxy-video-catalog/" : "/",
+  base: isGitHubPagesBuild ? "/" : "/",
   plugins,
   resolve: {
     alias: {
