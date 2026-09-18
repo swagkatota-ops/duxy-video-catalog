@@ -6,7 +6,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
-const appBase = import.meta.env.VITE_GITHUB_PAGES === "true" ? "/duxy-video-catalog" : "";
+const appBase = "";
 
 function AppRouter() {
   return (
